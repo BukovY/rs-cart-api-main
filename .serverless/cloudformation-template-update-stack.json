@@ -134,6 +134,22 @@
                       "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-backend-dev*:*:*"
                     }
                   ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ec2:CreateNetworkInterface"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ec2:CreateNetworkInterface",
+                    "ec2:DescribeNetworkInterfaces",
+                    "ec2:DeleteNetworkInterface"
+                  ],
+                  "Resource": "*"
                 }
               ]
             }
@@ -162,13 +178,22 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-backend/dev/1680721839982-2023-04-05T19:10:39.982Z/serverless-backend.zip"
+          "S3Key": "serverless/serverless-backend/dev/1681240495939-2023-04-11T19:14:55.939Z/serverless-backend.zip"
         },
         "Handler": "dist/serverless.handler",
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "FunctionName": "serverless-backend-dev-main",
         "MemorySize": 1024,
         "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "PG_HOST": "database-1.cv9gu4mxf0eg.eu-west-1.rds.amazonaws.com",
+            "PG_PORT": "5432",
+            "PG_DATABASE": "postgres",
+            "PG_USERNAME": "postgres",
+            "PG_PASSWORD": "postgrespostgres"
+          }
+        },
         "Role": {
           "Fn::GetAtt": [
             "IamRoleLambdaExecution",
@@ -180,14 +205,14 @@
         "MainLogGroup"
       ]
     },
-    "MainLambdaVersionxhfNZHbdH2WILKrQ6QiKn9YPFNAhm7Hl1msVbqtkmA": {
+    "MainLambdaVersionnEpNhke5L60C5n9vWZ5u4BffQ5K0hxogggUL5c60": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MainLambdaFunction"
         },
-        "CodeSha256": "tul7IjCrJBEI5jOUvV8D+UueEmxWZHiJe5F6VlXXI6E="
+        "CodeSha256": "IDfv8UpqLJnvr6u1r7tFadqVVnukIvxrgJ1AMFCwqnc="
       }
     },
     "ApiGatewayRestApi": {
@@ -312,7 +337,7 @@
         "MainLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1680721816700": {
+    "ApiGatewayDeployment1681240472601": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -375,7 +400,7 @@
     "MainLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MainLambdaVersionxhfNZHbdH2WILKrQ6QiKn9YPFNAhm7Hl1msVbqtkmA"
+        "Ref": "MainLambdaVersionnEpNhke5L60C5n9vWZ5u4BffQ5K0hxogggUL5c60"
       },
       "Export": {
         "Name": "sls-serverless-backend-dev-MainLambdaFunctionQualifiedArn"

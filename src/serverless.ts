@@ -16,7 +16,7 @@ async function bootstrap() {
     //     origin: (req, callback) => callback(null, true),
     // });
     // app.use(helmet());
-
+// comment
     await app.init()
 
     const expressApp = app.getHttpAdapter().getInstance()
@@ -28,5 +28,4 @@ async function bootstrap() {
 export const handler: Handler = async ( event: any, context: Context, callback: Callback) => {
     server = server ?? (await bootstrap())
     return server(event, context, callback)
-
 }
